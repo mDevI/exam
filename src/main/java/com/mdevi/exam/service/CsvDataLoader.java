@@ -1,14 +1,11 @@
 package com.mdevi.exam.service;
 
-import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import com.mdevi.exam.model.Question;
 import com.mdevi.exam.model.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,7 +46,7 @@ public class CsvDataLoader {
             CsvMapper mapper = new CsvMapper();
             List list = new CsvMapper().readerFor(type)
                     .with(bootstrapSchema.withColumnSeparator(bootstrapSchema.DEFAULT_COLUMN_SEPARATOR))
-                    .readValues(CsvDataLoader.class.getClassLoader().getResource(fileName)).readAll();
+                    .readValues(CsvDataLoader.class.getClassLoader().getResourceAsStream(fileName)).readAll();
             test.setQuestionList(list);
         } catch (Exception e) {
             logger.error("Error occurred while loading object list from file " + fileName, e);

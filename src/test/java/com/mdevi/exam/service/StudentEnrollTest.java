@@ -15,7 +15,7 @@ public class StudentEnrollTest {
 
     @Before
     public void setUp() throws Exception {
-        ctx = new ClassPathXmlApplicationContext("app-config-test.xml");
+        ctx = new ClassPathXmlApplicationContext("/app-config-test.xml");
         studentEnroll = ctx.getBean("studentEnrollmentBean", StudentEnroll.class);
         assertNotNull(studentEnroll.getStudent());
     }
