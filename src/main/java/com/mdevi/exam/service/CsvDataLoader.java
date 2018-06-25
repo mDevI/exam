@@ -7,10 +7,10 @@ import com.mdevi.exam.model.Question;
 import com.mdevi.exam.model.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Class for load questions text and answers from CSV file.
@@ -47,9 +47,10 @@ public class CsvDataLoader {
         try {
             CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
             CsvMapper mapper = new CsvMapper();
-            File file = new ClassPathResource(fileName).getFile();
-            MappingIterator<Question> readValues = mapper.reader().forType(type).with(bootstrapSchema).readValues(file);
-            test.setQuestionList(readValues.readAll());
+            List list = new CsvMapper().readerFor(type)
+                    .with(bootstrapSchema.withColumnSeparator(bootstrapSchema.DEFAULT_COLUMN_SEPARATOR))
+                    .readValues(CsvDataLoader.class.getClassLoader().getResource(fileName)).readAll();
+            test.setQuestionList(list);
         } catch (Exception e) {
             logger.error("Error occurred while loading object list from file " + fileName, e);
             test.setQuestionList(Collections.emptyList());
