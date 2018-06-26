@@ -12,10 +12,10 @@ import static org.junit.Assert.assertNotNull;
 
 public class CsvDataLoaderTest {
 
-    private static Logger logger = LoggerFactory.getLogger(CsvDataLoaderTest.class);
-    ClassPathXmlApplicationContext ctx;
-    CsvDataLoader loader;
-    com.mdevi.exam.model.Test test;
+    private final Logger logger = LoggerFactory.getLogger(CsvDataLoaderTest.class);
+    private ClassPathXmlApplicationContext ctx;
+    private CsvDataLoader loader;
+    private com.mdevi.exam.model.Test test;
 
     @Before
     public void setUp() throws Exception {
@@ -36,7 +36,7 @@ public class CsvDataLoaderTest {
             loader.getQuestionListFromCsv();
             assertEquals(5, test.getQuestionList().size());
         } catch (Exception e) {
-
+            logger.error("Something gone wrong during loading a question list from CSV file.");
         }
     }
 }
