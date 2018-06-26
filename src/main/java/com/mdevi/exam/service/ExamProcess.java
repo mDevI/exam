@@ -15,7 +15,7 @@ import java.util.Scanner;
  * @since 24.06.2018
  */
 public class ExamProcess {
-    private static Logger logger = LoggerFactory.getLogger(ExamProcess.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ExamProcess.class);
     private Test test;
     private Student student;
     private int result = 0;
@@ -42,7 +42,7 @@ public class ExamProcess {
             }
             printTestResult();
         } else {
-            logger.error("There aren't sufficient conditions to process test.");
+            LOGGER.error("There aren't sufficient conditions to process test.");
         }
     }
 

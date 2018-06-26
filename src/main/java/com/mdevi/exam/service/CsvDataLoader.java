@@ -16,7 +16,7 @@ import java.util.List;
  * @since 24.06.2018
  */
 public class CsvDataLoader {
-    private static Logger logger = LoggerFactory.getLogger(CsvDataLoader.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(CsvDataLoader.class);
     private Test test;
     private String fileName;
     private Class<?> type;
@@ -49,7 +49,7 @@ public class CsvDataLoader {
                     .readValues(CsvDataLoader.class.getClassLoader().getResourceAsStream(fileName)).readAll();
             test.setQuestionList(list);
         } catch (Exception e) {
-            logger.error("Error occurred while loading object list from file " + fileName, e);
+            LOGGER.error("Error occurred while loading object list from file " + fileName, e);
             test.setQuestionList(Collections.emptyList());
         }
     }

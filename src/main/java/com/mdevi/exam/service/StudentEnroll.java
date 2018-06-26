@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @since 24.04.2018
  */
 public class StudentEnroll {
-    private static Logger logger = LoggerFactory.getLogger(StudentEnroll.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(StudentEnroll.class);
 
     private Student student;
 
@@ -42,14 +42,12 @@ public class StudentEnroll {
         if (!("".equals(firstName)) && !("".equals(lastName))) {
             student.setFirstName(firstName);
             student.setLastName(lastName);
-            logger.info("The new student is enrolled: " + student.toString());
+            LOGGER.info("The new student is enrolled: " + student.toString());
             return student;
         } else {
-            logger.error("Wrong data has been entered.");
+            LOGGER.error("Wrong data has been entered.");
             return null;
         }
     }
-
-
 }
 
