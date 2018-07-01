@@ -10,7 +10,7 @@
         <property name="lastName" value="Doe"/>
         <property name="firstName" value="John"/>
     </bean>
-    <bean id="studentEnrollmentBean" class="com.mdevi.exam.service.StudentEnroll">
+    <bean id="studentEnrollmentBean" class="com.mdevi.exam.service.StudentEnrollmentImpl">
         <property name="student" ref="studentBean"/>
     </bean>
     <bean id="questionLoaderBean" class="com.mdevi.exam.service.CsvDataLoader" init-method="getQuestionListFromCsv">

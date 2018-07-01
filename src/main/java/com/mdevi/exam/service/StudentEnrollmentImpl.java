@@ -3,7 +3,11 @@ package com.mdevi.exam.service;
 import com.mdevi.exam.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Repository;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -12,30 +16,29 @@ import java.util.Scanner;
  * @author Sergei Belonosov
  * @since 24.04.2018
  */
-public class StudentEnroll {
-    private final Logger LOGGER = LoggerFactory.getLogger(StudentEnroll.class);
-
+@Repository
+public class StudentEnrollmentImpl implements StudentEnrollment {
+    private final Logger LOGGER = LoggerFactory.getLogger(StudentEnrollmentImpl.class);
     private Student student;
+    private Locale locale;
+
+    @Autowired
+    private MessageSource messageSource;
 
     public Student getStudent() {
         return student;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public StudentEnrollmentImpl() {
+        this.student = new Student();
+        this.locale = Locale.forLanguageTag("ru_RU");
     }
 
-    /**
-     * Method used for input a students first name and last name.
-     *
-     * @return Student with fulfilled info.
-     * @see Student
-     */
     public Student enrollStudent() {
         Scanner sc = new Scanner(System.in);
         System.out.println("-------------------------------");
-        System.out.println("Welcome to our test system!");
-        System.out.println("Enter your first name: ");
+        System.out.println(messageSource.getMessage("app.student.enrollment.welcome", new String[]{}, locale));
+        System.out.println(messageSource.getMessage("app.student.enrollment.enter.firstName", new String[]{}, locale));
         String firstName = sc.nextLine();
         System.out.println("Enter your last name: ");
         String lastName = sc.nextLine();
@@ -49,5 +52,7 @@ public class StudentEnroll {
             return null;
         }
     }
+
+
 }
 

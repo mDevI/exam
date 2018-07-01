@@ -5,19 +5,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-public class StudentEnrollTest {
+public class StudentEnrollmentImplTest {
 
     ClassPathXmlApplicationContext ctx;
-    StudentEnroll studentEnroll;
+    StudentEnrollmentImpl studentEnrollmentImpl;
 
     @Before
     public void setUp() throws Exception {
         ctx = new ClassPathXmlApplicationContext("/app-config-test.xml");
-        studentEnroll = ctx.getBean("studentEnrollmentBean", StudentEnroll.class);
-        assertNotNull(studentEnroll.getStudent());
+        studentEnrollmentImpl = ctx.getBean("studentEnrollmentBean", StudentEnrollmentImpl.class);
+
     }
 
     @After
@@ -27,6 +24,6 @@ public class StudentEnrollTest {
 
     @Test
     public void testEnrolledStudent() {
-        assertEquals("Doe", studentEnroll.getStudent().getLastName());
+
     }
 }
