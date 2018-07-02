@@ -8,9 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -62,9 +60,9 @@ public class TestProcessorImpl implements TestProcessor {
             Scanner sc = new Scanner(System.in);
             for (Question question: test.getQuestionList()) {
                 System.out.println(messageSource.getMessage("app.test.process.question.number",
-                        new Object[]{question.getNumber(),question.getText() }, locale));
+                        new String[]{question.getNumber(), question.getText()}, locale));
                 String testAnswer = sc.nextLine();
-                if (testAnswer.equals(question.getAnswer())) {
+                if (testAnswer.equals(question.getAnswer().trim())) {
                     result++;
                 }
             }
@@ -72,7 +70,6 @@ public class TestProcessorImpl implements TestProcessor {
         } else {
             logger.error("There aren't sufficient conditions to process test.");
         }
-
     }
 
     private void printIntro() {

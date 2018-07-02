@@ -1,20 +1,19 @@
 package com.mdevi.exam.service;
 
+import com.mdevi.exam.config.AppConfig;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class StudentEnrollmentImplTest {
 
-    ClassPathXmlApplicationContext ctx;
-    StudentEnrollmentImpl studentEnrollmentImpl;
+    AnnotationConfigApplicationContext ctx;
+    StudentEnrollment studentEnrollment;
 
     @Before
     public void setUp() throws Exception {
-        ctx = new ClassPathXmlApplicationContext("/app-config-test.xml");
-        studentEnrollmentImpl = ctx.getBean("studentEnrollmentBean", StudentEnrollmentImpl.class);
-
+        ctx = new AnnotationConfigApplicationContext(AppConfig.class);
     }
 
     @After
