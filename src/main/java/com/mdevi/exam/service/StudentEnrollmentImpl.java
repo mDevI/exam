@@ -15,7 +15,7 @@ import java.util.Scanner;
  * This class represents service for student enrollment before attend test exam.
  *
  * @author Sergei Belonosov
- * @since 24.04.2018
+ * @since 24.06.2018
  */
 @Repository
 public class StudentEnrollmentImpl implements StudentEnrollment {
@@ -61,7 +61,5 @@ public class StudentEnrollmentImpl implements StudentEnrollment {
             return null;
         }
     }
-
-
 }
 
