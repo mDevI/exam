@@ -12,6 +12,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
+import java.util.Optional;
+
 @Configuration
 @PropertySource(value = "classpath:application.properties", encoding = "UTF-8")
 @ComponentScan(basePackages = "com.mdevi.exam")
@@ -19,11 +21,9 @@ public class AppConfig {
 
     @Value("${app.questions.csv.file}")
     private String csvFileName;
+    @Value("${app.locale.string}")
+    private String localeString;
 
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
 
     @Bean
     public StudentEnrollment studentEnrollment() {
@@ -36,6 +36,7 @@ public class AppConfig {
         TestQuestionsLoaderImpl loader = new TestQuestionsLoaderImpl();
         loader.setFileName(csvFileName);
         loader.setType(Question.class);
+        loader.setLocaleString(localeString);
         return loader;
     }
 
@@ -52,5 +53,10 @@ public class AppConfig {
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setFallbackToSystemLocale(false);
         return messageSource;
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }

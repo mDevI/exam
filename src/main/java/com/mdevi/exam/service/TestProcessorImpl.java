@@ -6,9 +6,13 @@ import com.mdevi.exam.model.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 @Service
@@ -20,6 +24,9 @@ public class TestProcessorImpl implements TestProcessor {
     private Test test;
     private int result;
     private TestQuestionsLoader testQuestionsLoader;
+    @Autowired
+    private MessageSource messageSource;
+    private Locale locale;
 
     @Autowired
     public TestProcessorImpl(StudentEnrollment studentEnrollment) {
@@ -35,8 +42,8 @@ public class TestProcessorImpl implements TestProcessor {
     @Override
     public void doTest() {
         result = 0;
+        locale = Locale.forLanguageTag("ru-RU");
         theStudent = studentEnrollment.enrollStudent();
-        System.out.println(theStudent.toString());
         List<Question> questions = testQuestionsLoader.loadTestQuestions();
         test.setQuestionList(questions);
 
@@ -44,7 +51,8 @@ public class TestProcessorImpl implements TestProcessor {
             printIntro();
             Scanner sc = new Scanner(System.in);
             for (Question question: test.getQuestionList()) {
-                System.out.println("Question #" + question.getNumber() + ": " + question.getText());
+                System.out.println(messageSource.getMessage("app.test.process.question.number",
+                        new Object[]{question.getNumber(),question.getText() }, locale));
                 String testAnswer = sc.nextLine();
                 if (testAnswer.equals(question.getAnswer())) {
                     result++;
@@ -59,13 +67,14 @@ public class TestProcessorImpl implements TestProcessor {
 
     private void printIntro() {
         System.out.println("---------------------------------");
-        System.out.println("\t\t Test begins");
-        System.out.println("Please, answer the questions. \n");
+        System.out.println(messageSource.getMessage("app.test.process.intro.begin", new String[]{}, locale));
+        System.out.println(messageSource.getMessage("app.test.process.intro.answer", new String[]{}, locale));
     }
 
     private void printTestResult() {
         System.out.println("---------------------------------");
-        System.out.println("The test accomplished.");
-        System.out.printf("Student: %s %s has test result: %d \n\n", theStudent.getFirstName(), theStudent.getLastName(), result);
+        System.out.println(messageSource.getMessage("app.test.process.result.test.end", new String[]{}, locale));
+        System.out.printf(messageSource.getMessage("app.test.process.result.total",
+                new String[]{theStudent.getFirstName(), theStudent.getLastName(), Integer.toString(result)}, locale));
     }
 }

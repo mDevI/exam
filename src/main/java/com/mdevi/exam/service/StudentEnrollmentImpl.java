@@ -20,10 +20,9 @@ import java.util.Scanner;
 public class StudentEnrollmentImpl implements StudentEnrollment {
     private final Logger LOGGER = LoggerFactory.getLogger(StudentEnrollmentImpl.class);
     private Student student;
-    private Locale locale;
-
     @Autowired
     private MessageSource messageSource;
+    private Locale locale;
 
     public Student getStudent() {
         return student;
@@ -31,21 +30,21 @@ public class StudentEnrollmentImpl implements StudentEnrollment {
 
     public StudentEnrollmentImpl() {
         this.student = new Student();
-        this.locale = Locale.forLanguageTag("ru_RU");
     }
 
     public Student enrollStudent() {
+        locale = Locale.forLanguageTag("ru-RU");
         Scanner sc = new Scanner(System.in);
         System.out.println("-------------------------------");
         System.out.println(messageSource.getMessage("app.student.enrollment.welcome", new String[]{}, locale));
         System.out.println(messageSource.getMessage("app.student.enrollment.enter.firstName", new String[]{}, locale));
         String firstName = sc.nextLine();
-        System.out.println("Enter your last name: ");
+        System.out.println(messageSource.getMessage("app.student.enrollment.enter.lastName", new String[]{}, locale));
         String lastName = sc.nextLine();
         if (!("".equals(firstName)) && !("".equals(lastName))) {
             student.setFirstName(firstName);
             student.setLastName(lastName);
-            LOGGER.info("The new student is enrolled: " + student.toString());
+            // LOGGER.info("The new student is enrolled: " + student.toString());
             return student;
         } else {
             LOGGER.error("Wrong data has been entered.");
