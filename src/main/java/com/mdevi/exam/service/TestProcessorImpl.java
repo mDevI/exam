@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Scanner;
 
 @Service
@@ -27,6 +28,11 @@ public class TestProcessorImpl implements TestProcessor {
     @Autowired
     private MessageSource messageSource;
     private Locale locale;
+    private Optional<String> localeString;
+
+    public void setLocaleString(String localeString) {
+        this.localeString = Optional.ofNullable(localeString);
+    }
 
     @Autowired
     public TestProcessorImpl(StudentEnrollment studentEnrollment) {
@@ -42,7 +48,11 @@ public class TestProcessorImpl implements TestProcessor {
     @Override
     public void doTest() {
         result = 0;
-        locale = Locale.forLanguageTag("ru-RU");
+        if(localeString.isPresent()) {
+            locale = Locale.forLanguageTag(localeString.get());
+        } else {
+            locale = Locale.getDefault();
+        }
         theStudent = studentEnrollment.enrollStudent();
         List<Question> questions = testQuestionsLoader.loadTestQuestions();
         test.setQuestionList(questions);
@@ -74,7 +84,7 @@ public class TestProcessorImpl implements TestProcessor {
     private void printTestResult() {
         System.out.println("---------------------------------");
         System.out.println(messageSource.getMessage("app.test.process.result.test.end", new String[]{}, locale));
-        System.out.printf(messageSource.getMessage("app.test.process.result.total",
+        System.out.println(messageSource.getMessage("app.test.process.result.total",
                 new String[]{theStudent.getFirstName(), theStudent.getLastName(), Integer.toString(result)}, locale));
     }
 }

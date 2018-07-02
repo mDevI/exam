@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -23,6 +24,11 @@ public class StudentEnrollmentImpl implements StudentEnrollment {
     @Autowired
     private MessageSource messageSource;
     private Locale locale;
+    private Optional<String> localeString;
+
+    public void setLocaleString(String localeString) {
+        this.localeString = Optional.ofNullable(localeString);
+    }
 
     public Student getStudent() {
         return student;
@@ -33,7 +39,11 @@ public class StudentEnrollmentImpl implements StudentEnrollment {
     }
 
     public Student enrollStudent() {
-        locale = Locale.forLanguageTag("ru-RU");
+        if(localeString.isPresent()) {
+            locale = Locale.forLanguageTag(localeString.get());
+        } else {
+            locale = Locale.getDefault();
+        }
         Scanner sc = new Scanner(System.in);
         System.out.println("-------------------------------");
         System.out.println(messageSource.getMessage("app.student.enrollment.welcome", new String[]{}, locale));

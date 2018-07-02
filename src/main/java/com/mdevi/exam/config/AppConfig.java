@@ -28,6 +28,7 @@ public class AppConfig {
     @Bean
     public StudentEnrollment studentEnrollment() {
         StudentEnrollmentImpl studentEnrollment = new StudentEnrollmentImpl();
+        studentEnrollment.setLocaleString(localeString);
         return studentEnrollment;
     }
 
@@ -43,7 +44,9 @@ public class AppConfig {
     @Bean
     @Qualifier("testProcessor")
     public TestProcessor testProcessor() {
-        return new TestProcessorImpl(studentEnrollment());
+        TestProcessorImpl testProcessor = new TestProcessorImpl(studentEnrollment());
+        testProcessor.setLocaleString(localeString);
+        return testProcessor;
     }
 
     @Bean
