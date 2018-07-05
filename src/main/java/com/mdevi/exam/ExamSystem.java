@@ -7,10 +7,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class ExamSystem {
 
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-        ctx.register(AppConfig.class);
-        ctx.refresh();
-        TestProcessor testProcessor = ctx.getBean("testProcessor", TestProcessor.class);
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+        TestProcessor testProcessor = ctx.getBean( TestProcessor.class);
         testProcessor.doTest();
         ctx.close();
     }

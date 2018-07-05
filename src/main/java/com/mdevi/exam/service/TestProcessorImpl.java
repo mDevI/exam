@@ -7,14 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Scanner;
 
-@Service
+
 public class TestProcessorImpl implements TestProcessor {
 
     private final Logger logger = LoggerFactory.getLogger(TestProcessorImpl.class);
@@ -23,24 +22,19 @@ public class TestProcessorImpl implements TestProcessor {
     private Test test;
     private int result;
     private TestQuestionsLoader testQuestionsLoader;
-    @Autowired
     private MessageSource messageSource;
     private Locale locale;
     private Optional<String> localeString;
 
-    public void setLocaleString(String localeString) {
-        this.localeString = Optional.ofNullable(localeString);
-    }
-
     @Autowired
-    public TestProcessorImpl(StudentEnrollment studentEnrollment) {
+    public TestProcessorImpl(StudentEnrollment studentEnrollment,
+                             TestQuestionsLoader testQuestionsLoader,
+                             MessageSource messageSource, Optional<String> localeString) {
         this.studentEnrollment = studentEnrollment;
-        this.test = new Test();
-    }
-
-    @Autowired
-    public void setTestQuestionsLoader(TestQuestionsLoader testQuestionsLoader) {
         this.testQuestionsLoader = testQuestionsLoader;
+        this.messageSource = messageSource;
+        this.localeString = localeString;
+        this.test = new Test();
     }
 
     @Override

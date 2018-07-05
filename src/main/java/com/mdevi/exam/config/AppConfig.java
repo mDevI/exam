@@ -2,7 +2,6 @@ package com.mdevi.exam.config;
 
 import com.mdevi.exam.model.Question;
 import com.mdevi.exam.service.*;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -27,25 +26,25 @@ public class AppConfig {
 
     @Bean
     public StudentEnrollment studentEnrollment() {
-        StudentEnrollmentImpl studentEnrollment = new StudentEnrollmentImpl();
-        studentEnrollment.setLocaleString(localeString);
+        StudentEnrollmentImpl studentEnrollment =
+                new StudentEnrollmentImpl(Optional.ofNullable(localeString), messageSource());
         return studentEnrollment;
     }
 
     @Bean
     public TestQuestionsLoader testQuestionsLoader() {
-        TestQuestionsLoaderImpl loader = new TestQuestionsLoaderImpl();
+        TestQuestionsLoaderImpl loader =
+                new TestQuestionsLoaderImpl(Optional.ofNullable(localeString));
         loader.setFileName(csvFileName);
         loader.setType(Question.class);
-        loader.setLocaleString(localeString);
         return loader;
     }
 
     @Bean
-    @Qualifier("testProcessor")
+
     public TestProcessor testProcessor() {
-        TestProcessorImpl testProcessor = new TestProcessorImpl(studentEnrollment());
-        testProcessor.setLocaleString(localeString);
+        TestProcessorImpl testProcessor =
+                new TestProcessorImpl(studentEnrollment(),testQuestionsLoader(),messageSource(),Optional.ofNullable(localeString));
         return testProcessor;
     }
 

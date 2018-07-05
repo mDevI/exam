@@ -3,9 +3,7 @@ package com.mdevi.exam.service;
 import com.mdevi.exam.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Repository;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -16,29 +14,22 @@ import java.util.Scanner;
  *
  * @author Sergei Belonosov
  * @since 24.06.2018
+ *
  */
-@Repository
 public class StudentEnrollmentImpl implements StudentEnrollment {
     private final Logger LOGGER = LoggerFactory.getLogger(StudentEnrollmentImpl.class);
     private Student student;
-    @Autowired
     private MessageSource messageSource;
-    private Locale locale;
     private Optional<String> localeString;
 
-    public void setLocaleString(String localeString) {
-        this.localeString = Optional.ofNullable(localeString);
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public StudentEnrollmentImpl() {
+    public StudentEnrollmentImpl(Optional<String> localeString, MessageSource messageSource) {
         this.student = new Student();
+        this.localeString = localeString;
+        this.messageSource = messageSource;
     }
 
     public Student enrollStudent() {
+        Locale locale;
         if(localeString.isPresent()) {
             locale = Locale.forLanguageTag(localeString.get());
         } else {
