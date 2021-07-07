@@ -3,24 +3,26 @@ package com.mdevi.exam.model;
 import java.io.Serializable;
 
 public class Question implements Serializable {
-    private int number;
+    private String number;
     private String text;
     private String answer;
+    private String locale;
 
-    public Question(int number, String text, String answer) {
+    public Question(String number, String text, String answer, String locale) {
         this.number = number;
         this.text = text;
         this.answer = answer;
+        this.locale = locale;
     }
 
     public Question() {
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
@@ -38,6 +40,14 @@ public class Question implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 
     @Override
